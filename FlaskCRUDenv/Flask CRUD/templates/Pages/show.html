@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block info %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <span><strong> Message: </strong>{{ message }}</span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+{% endblock info %}
+
+
+{% block body %}
+<div class="container">
+    <div class="text-center mt-3">
+        <h3>Student Registration Data</h3>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">S.No</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for d in data %}
+            <tr>
+                <th scope="row">{{loop.index}}</th>
+                <td>{{d.Name}}</td>
+                <td>{{d.Email}}</td>
+                <td>{{d.Phone}}</td>
+                {# href="/edit?id={{d.id}} #}
+                {{d.id}}
+                <td><a data-bs-toggle="modal" data-bs-target="#editModal" class="btn btn-info btn-sm">Edit</a> <a
+                        href="/delete?id={{d.id}}" class="btn btn-info btn-sm">Delete</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Edit Student Data</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/" method="POST">
+                    <div class="mb-3">
+                        <label for="Name" class="form-label">Name</label>
+                        <input required autofocus type="text" class="form-control" id="Name" name="Name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Email" class="form-label">Email</label>
+                        <input required type="email" class="form-control" id="Email" name="Email">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Phone" class="form-label">Phone</label>
+                        <input required type="text" class="form-control" id="Phone" name="Phone">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer text-center" style="display: block;">
+                <button type="button" class="btn btn-primary">Edit Data</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

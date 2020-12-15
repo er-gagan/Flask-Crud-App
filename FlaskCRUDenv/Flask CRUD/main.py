@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash
+from flask import Flask, render_template, request, flash, redirect
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -25,5 +25,21 @@ def home():
         db.session.commit()
         flash("Data Stored Into Database")
     return render_template("Pages/home.html")
+
+@app.route('/show')
+def show():
+    data = Students.query.all()
+    return render_template("pages/show.html", data=data)
+
+
+
+
+@app.route('/delete')
+def delete():
+    id = request.args.get('id')
+    Students.query.filter_by(id = id).delete()
+    db.session.commit()
+    flash("Student Data Successfully Delete into Database")
+    return redirect("/show")
 
 app.run(debug=True)
