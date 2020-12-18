@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, redirect
+from flask import Flask, render_template, request, flash, redirect, session
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -29,10 +29,33 @@ def home():
 @app.route('/show')
 def show():
     data = Students.query.all()
-    return render_template("pages/show.html", data=data)
+    return render_template("Pages/show.html", data=data)
 
-
-
+@app.route('/editPage')
+def Edit():
+    id = request.args.get('id')
+    data = Students.query.filter_by(id = id)
+    for i in data:
+        session['id'] = i.id
+        Name = i.Name
+        Email = i.Email
+        Phone = i.Phone
+        return render_template("Pages/edit.html", Name=Name, Email=Email, Phone=Phone)
+    
+@app.route('/editData', methods=['POST'])
+def EditData():
+    if request.method == 'POST':
+        ID = session['id']
+        Name = request.form.get('Name')
+        Email = request.form.get('Email')
+        Phone = request.form.get('Phone')
+        data = Students.query.get(ID)
+        data.Name,data.Email,data.Phone = Name,Email,Phone
+        db.session.commit()
+        flash("Student Record Updated..")
+        return redirect("/show")
+    else:
+        return "<h1>404 - Not Found</h1>"
 
 @app.route('/delete')
 def delete():

@@ -37,9 +37,11 @@
                 <td>{{d.Email}}</td>
                 <td>{{d.Phone}}</td>
                 {# href="/edit?id={{d.id}} #}
-                {{d.id}}
-                <td><a data-bs-toggle="modal" data-bs-target="#editModal" class="btn btn-info btn-sm">Edit</a> <a
-                        href="/delete?id={{d.id}}" class="btn btn-info btn-sm">Delete</a></td>
+                <!-- {{d.id}} -->
+                <td>
+                    <a href="/editPage?id={{d.id}}" class="btn btn-info btn-sm">Edit</a>
+                    <a href="/delete?id={{d.id}}" class="btn btn-info btn-sm">Delete</a>
+                </td>
             </tr>
             {% endfor %}
         </tbody>

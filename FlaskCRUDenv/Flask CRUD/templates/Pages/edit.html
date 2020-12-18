@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block info %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <span><strong> Message: </strong>{{ message }}</span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+{% endblock info %}
+
+
+{% block body %}
+<div class="container">
+    <div class="text-center mt-3">
+        <h3>Edit Student Record</h3>
+    </div>
+    <form action="/editData" method="POST">
+        <div class="mb-3">
+            <label for="Name" class="form-label">Name</label>
+            <input required autofocus type="text" class="form-control" id="Name" name="Name" value="{{Name}}">
+        </div>
+        <div class="mb-3">
+            <label for="Email" class="form-label">Email</label>
+            <input required type="email" class="form-control" id="Email" name="Email" value="{{Email}}">
+        </div>
+        <div class="mb-3">
+            <label for="Phone" class="form-label">Phone</label>
+            <input required type="text" class="form-control" id="Phone" name="Phone" value="{{Phone}}">
+        </div>
+        <div class="mb-2 text-center">
+            <input type="submit" value="Edit Data" class="btn btn-lg btn-success">
+        </div>
+    </form>
+</div>
+</div>
+{% endblock body %}
